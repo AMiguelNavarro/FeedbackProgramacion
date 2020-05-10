@@ -30,10 +30,38 @@ public class Main {
 			}
 			
 		// 4.- CERRAR CANALES DE COMUNICACION
-			// Muy importante cerrar todos los canales, si se queda abierta al realizar otra conexión dará error
+			// Muy importante cerrar todos los canales, si se queda abierta al realizar otra conexión dará error 
 			resul.close(); 
 			sentencia.close();
 			conexion.close();
+			
+		// PARA EVITAR INYECCIONES SQL HAY QUE HACER LOS INSERT, UPDATE Y DELETE DE LA SIGUIENTE FORMA
+			// String sql = "INSERT INTO PARQUES VALUES (?, ?, ?)";
+			
+		// AHORA CREAMOS EL PREPARE STATEMENT PERO EN LUGAR DE CREATE PONEMOS PREPARE
+			// PreparedStatement sentencia = conexion.preparedStatement(sql);
+			
+		// SE SUSTITUYEN LOS INTERROGANTES CON LOS SETTERS
+			//sentencia.setInt(1, Integer.parseInt(ID_PARQUE));
+			//sentencia.setString(2, NOMBRE_PARQUE);
+			//sentencia.setString(3, EXTENSION );
+			
+		// SE EJECUTA LA SENTENCIA CON EL NÚMERO DE FILAS INSERTADAS
+			/*
+			 * int filas;
+			 * try{
+			 * 	filas = sentencia.executeUpdate();
+			 * 	System.out.println("Filas insertadas: " +filas);
+			 * }
+			 * catch (SQLException e) {
+			 * 	System.out.println("No se ha podido insertar nada" +e.getMessage);
+			 * }
+			 * finally { // Siempre meter el cierre de conexiones en el finally, ya que siempre se va a ejecutar
+			 * 	sentencia.close();
+			 * 	conexion.close(),
+			 * }
+			 * 
+			 * */
 			
 		} catch (Exception e) {
 			System.out.println("NO CONECTA!!");
