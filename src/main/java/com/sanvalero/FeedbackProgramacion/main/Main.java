@@ -25,9 +25,15 @@ public class Main {
 			
 		// 3.- RECORRER RESULTADO */
 			
-			while (resul.next()) {
-				System.out.println(resul.getString("NOMBRE_PARQUE") + " " + resul.getString("EXTENSION"));
+			while (resul.next()) { // Con esto se posiciona en el primer registro que ha devuelto la consulta 
+				System.out.println(resul.getString(2) + " " + resul.getString("EXTENSION"));
 			}
+			
+		// 4.- CERRAR CANALES DE COMUNICACION
+			// Muy importante cerrar todos los canales, si se queda abierta al realizar otra conexión dará error
+			resul.close(); 
+			sentencia.close();
+			conexion.close();
 			
 		} catch (Exception e) {
 			System.out.println("NO CONECTA!!");
