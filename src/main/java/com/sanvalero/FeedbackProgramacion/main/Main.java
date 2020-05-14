@@ -12,7 +12,7 @@ public class Main {
 		/* CONEXION CON LA BBDD */
 		
 		try {
-			
+	
 		// 1.- CONEXION CON LA BD
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","HR");
@@ -35,6 +35,8 @@ public class Main {
 			sentencia.close();
 			conexion.close();
 			
+		
+			
 		// PARA EVITAR INYECCIONES SQL HAY QUE HACER LOS INSERT, UPDATE Y DELETE DE LA SIGUIENTE FORMA
 			// String sql = "INSERT INTO PARQUES VALUES (?, ?, ?)";
 			
@@ -45,6 +47,8 @@ public class Main {
 			//sentencia.setInt(1, Integer.parseInt(ID_PARQUE));
 			//sentencia.setString(2, NOMBRE_PARQUE);
 			//sentencia.setString(3, EXTENSION );
+		
+			// Estas variables se declaran arriba
 			
 		// SE EJECUTA LA SENTENCIA CON EL NÚMERO DE FILAS INSERTADAS
 			/*
@@ -62,6 +66,8 @@ public class Main {
 			 * }
 			 * 
 			 * */
+			
+			// Para inserts, deletes y update se usa executeUpdate no executeQuery
 			
 		} catch (Exception e) {
 			System.out.println("NO CONECTA!!");
