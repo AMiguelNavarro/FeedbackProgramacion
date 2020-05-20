@@ -1,79 +1,68 @@
 package com.sanvalero.FeedbackProgramacion.main;
 
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.util.Scanner;
+
+import com.sanvalero.FeedbackProgramacion.dao.ParquesDao;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		/* CONEXION CON LA BBDD */
-		
-		try {
-	
-		// 1.- CONEXION CON LA BD
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","HR");
+		Scanner sc = new Scanner(System.in);
+		int num;
 			
+			System.out.println("\n\n¿Qué consulta SQL quieres realizar?");
+			System.out.println("1.- Listar todos los parques de una determinada ciudad por nombre.");
+			System.out.println("2.- Listar todos los parques de una cierta comunidad autóma por nombre.");
+			System.out.println("3.- Añadir un parque a una determinada ciudad (por nombre de ciudad), si la ciudad no existe no se añade y se informa de ello.");
+			System.out.println("4.- Actualizar la información de un parque (primero se pedirá al usuario el nombre del parque que quiere actualizar, se buscará en la base de datos y se mostrarán los datos del parque (nombre, nombre ciudad, extensión) y a continuación se pedirán los 3 nuevos datos (nombre, nombre ciudad y extensión) y se hará la actualización.");
+			System.out.println("5.- Seleccionar todos los parques cuyo nombre contenga una determinada cadena.");
+			System.out.println("6.- Devolver el número de parques de una determinada ciudad que tengan una extensión individual mayor que la que desee el usuario.");
+			System.out.println("7.- Borrar todos los parques de una determinada ciudad por nombre.");
+			System.out.println("8.- Listar el nombre de todas las ciudades que contengan parques cuya suma total de su extensión, sea mayor que la que quiera el usuario.");
+			System.out.print("Número: ");
+			System.out.println("\n\n");
 			
-		// 2.- PREPARAR LA CONSULTA 			
-			Statement sentencia = conexion.createStatement();
-			String sql = "SELECT * FROM PARQUES";
-			ResultSet resul = sentencia.executeQuery(sql); //Para ejecutar una consulta
-			
-		// 3.- RECORRER RESULTADO */
-			
-			while (resul.next()) { // Con esto se posiciona en el primer registro que ha devuelto la consulta 
-				System.out.println(resul.getString(2) + " " + resul.getString("EXTENSION"));
-			}
-			
-		// 4.- CERRAR CANALES DE COMUNICACION
-			// Muy importante cerrar todos los canales, si se queda abierta al realizar otra conexión dará error 
-			resul.close(); 
-			sentencia.close();
-			conexion.close();
-			
-		
-			
-		// PARA EVITAR INYECCIONES SQL HAY QUE HACER LOS INSERT, UPDATE Y DELETE DE LA SIGUIENTE FORMA
-			// String sql = "INSERT INTO PARQUES VALUES (?, ?, ?)";
-			
-		// AHORA CREAMOS EL PREPARE STATEMENT PERO EN LUGAR DE CREATE PONEMOS PREPARE
-			// PreparedStatement sentencia = conexion.preparedStatement(sql);
-			
-		// SE SUSTITUYEN LOS INTERROGANTES CON LOS SETTERS
-			//sentencia.setInt(1, Integer.parseInt(ID_PARQUE));
-			//sentencia.setString(2, NOMBRE_PARQUE);
-			//sentencia.setString(3, EXTENSION );
-		
-			// Estas variables se declaran arriba
-			
-		// SE EJECUTA LA SENTENCIA CON EL NÚMERO DE FILAS INSERTADAS
-			/*
-			 * int filas;
-			 * try{
-			 * 	filas = sentencia.executeUpdate();
-			 * 	System.out.println("Filas insertadas: " +filas);
-			 * }
-			 * catch (SQLException e) {
-			 * 	System.out.println("No se ha podido insertar nada" +e.getMessage);
-			 * }
-			 * finally { // Siempre meter el cierre de conexiones en el finally, ya que siempre se va a ejecutar
-			 * 	sentencia.close();
-			 * 	conexion.close(),
-			 * }
-			 * 
-			 * */
-			
-			// Para inserts, deletes y update se usa executeUpdate no executeQuery
-			
-		} catch (Exception e) {
-			System.out.println("NO CONECTA!!");
-		}
-		
-		
+			num = sc.nextInt();
+				
+				switch (num) {
+				
+				case 1:	
+					
+					ParquesDao parque1 = new ParquesDao();
+					parque1.listarParquesPorIdCiudad();
+					
+					break;
+					
+				case 2:
+					
+					ParquesDao parque2 = new ParquesDao();
+					parque2.listarParquesPorCCAA();
+					
+					break;
+					
+				case 3:	
+					
+					ParquesDao parque3 = new ParquesDao();
+					parque3.añadirParque(1);
+					
+					break;
+				case 4:
+					break;
+				case 5:				
+					break;
+				case 6:
+					break;
+				case 7:				
+					break;
+				case 8:
+					break;
+				
+
+				default:
+					System.out.println("No has seleccionado un número de la lista");
+					break;
+				}
 		
 		
 	}

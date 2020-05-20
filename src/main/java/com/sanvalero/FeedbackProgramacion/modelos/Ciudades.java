@@ -1,23 +1,22 @@
-package com.sanvalero.FeedbackProgramacion.clases;
+package com.sanvalero.FeedbackProgramacion.modelos;
 
 public class Ciudades { // Beans o Pojos
 	
-	private String idCiudad;
+	private int idCiudad;
 	private String nombreCiudad;
 	private String ccaa;
 	
 	
-	
-	public Ciudades(String idCiudad, String nombreCiudad, String ccaa) {
+	public Ciudades(int idCiudad, String nombreCiudad, String ccaa) {
 		this.idCiudad = idCiudad;
 		this.nombreCiudad = nombreCiudad;
 		this.ccaa = ccaa;
 	}
 	
-	public String getIdCiudad() {
+	public int getIdCiudad() {
 		return idCiudad;
 	}
-	public void setIdCiudad(String idCiudad) {
+	public void setIdCiudad(int idCiudad) {
 		this.idCiudad = idCiudad;
 	}
 	public String getNombreCiudad() {
@@ -36,7 +35,7 @@ public class Ciudades { // Beans o Pojos
 	
 	@Override
 	public String toString() {
-		return "Ciudades (" + "idCiudad = " +idCiudad+ "nombreCiudad = " + nombreCiudad+ "comunidadAutonoma = " +ccaa;
+		return "Ciudades (" + "idCiudad = " +idCiudad+ ", nombreCiudad = " + nombreCiudad+ ", comunidadAutonoma = " +ccaa+ ")";
 	}
 	
 

@@ -1,33 +1,33 @@
  package com.sanvalero.FeedbackProgramacion.dao;
 
-import java.beans.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-import com.sanvalero.FeedbackProgramacion.clases.Ciudades;
-import com.sanvalero.FeedbackProgramacion.conexion.Conexion;
+import com.sanvalero.FeedbackProgramacion.interfaces.IDAO;
+import com.sanvalero.FeedbackProgramacion.modelos.Ciudades;
 
-public class CiudadesDao extends Conexion{
+
+public class CiudadesDao extends BaseDAO implements IDAO <Ciudades, String>{
 	
-	private final String SELECT_POR_CIUDAD = "SELECT NOMBRE_PARQUE FROM PARQUES WHERE ID_CIUDAD = 1";
 	
-	
-	public void listarParquesPorIdCiudad(Ciudades c) { // Pregunta 1
-		
-		this.conectar();
-		try {
-			
-			Statement st = conexion.createStatement;
-			ResultSet resul = st.conexion.executeQuery(SELECT_POR_CIUDAD);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			conexion.close();
-			st.close();
-			resul.close;
-			
-		}
-		
+	// Parte de las interfaces
+
+	public int añadir(Ciudades bean) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int borrar(String integer) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<Ciudades> findAll(Ciudades bean) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int actualizar(Ciudades bean) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

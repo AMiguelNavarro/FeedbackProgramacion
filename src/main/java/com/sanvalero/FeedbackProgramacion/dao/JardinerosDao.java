@@ -1,7 +1,5 @@
 package com.sanvalero.FeedbackProgramacion.dao;
 
-import com.sanvalero.FeedbackProgramacion.conexion.Conexion;
-
-public class JardinerosDao extends Conexion{
+public class JardinerosDao extends BaseDAO{
 
 }
