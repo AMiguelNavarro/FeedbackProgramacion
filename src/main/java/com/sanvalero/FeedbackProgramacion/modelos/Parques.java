@@ -7,6 +7,11 @@ public class Parques { // Bean
 	private String extension;
 	private int idCiudad;
 	
+	
+	
+	public Parques() {
+	}
+
 	public Parques(int idParque, String nombreParque, String extension, int idCiudad) {
 		this.idParque = idParque;
 		this.nombreParque = nombreParque;

@@ -7,6 +7,9 @@ public class Ciudades { // Beans o Pojos
 	private String ccaa;
 	
 	
+	public Ciudades() {
+	}
+
 	public Ciudades(int idCiudad, String nombreCiudad, String ccaa) {
 		this.idCiudad = idCiudad;
 		this.nombreCiudad = nombreCiudad;

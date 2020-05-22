@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import com.sanvalero.FeedbackProgramacion.interfaces.IDAO;
 import com.sanvalero.FeedbackProgramacion.modelos.Parques;
+
+import oracle.net.aso.p;
 
 public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	
@@ -78,39 +81,25 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	/**
 	 *@author alber
 	 *@param Pregunta 3
-	 *Añadir un parque a una ciudad y si no existe informa de ellos 
+	 *Añadir el parque 
 	 */
-	public void añadirParque(int idCiudadAInsertar) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		try {
-			
-			if (idCiudadAInsertar < 1 || idCiudadAInsertar > 5) {
-				System.out.println("El id no existe");
-			} else {			
-				
-				PreparedStatement ps = conexion.prepareStatement(ANIADIR_PARQUE);
-				ps.setInt(1, 50);
-				ps.setString(2, "Parque Grande (PG)");
-				ps.setString(3, "15000");
-				ps.setInt(4, idCiudadAInsertar);
-				
-				ps.close();
-			}	
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.desconectar();
-		}
-	}
-	
+	public int añadir(Parques p) throws SQLException {
+		String query = "INSERT INTO PARQUES (ID_PARQUE, NOMBRE_PARQUE, EXTENSION, ID_CIUDAD) VALUES (?, ?, ?, ?)";
+		this.conectar();
 
-
-	public int añadir(Parques bean) {
+		PreparedStatement ps = conexion.prepareStatement(query);
+			ps.setInt(1, p.getIdParque());
+			ps.setString(2, p.getNombreParque());
+			ps.setString(3, p.getExtension());
+			ps.setInt(4, p.getIdCiudad());
+			
+		int n = ps.executeUpdate();
 		
-		return 0;
+		ps.close();
+		
+		this.desconectar();
+		
+		return n;
 	}
 
 	public int borrar(String integer) {
@@ -118,14 +107,53 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 		return 0;
 	}
 
-	public List<Parques> findAll(Parques bean) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	/**
+	 *@author alber
+	 *@param Pregunta 4
+	 *Listar los parque por el nombre de parque que haya puesto el usuario
+	 */
+	public List<Parques> findAll(Parques p) throws SQLException{
+	
+		String query = "SELECT * FROM PARQUES WHERE NOMBRE_PARQUE = ?";
+		
+		PreparedStatement ps = conexion.prepareStatement(query);
+		ps.setString(1, p.getNombreParque());
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<Parques> listaParques = new ArrayList();
+		
+		while (rs.next()) {
+			Parques parque = new Parques();
+			parque.setNombreParque(rs.getString("NOMBRE_PARQUE"));
+			parque.setExtension(rs.getString("EXTENSION"));
+			parque.setIdCiudad(rs.getInt("ID_CIUDAD"));
+		}
+		
+		return listaParques;
 	}
 
-	public int actualizar(Parques bean) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	/**
+	 *@author alber
+	 *@param Pregunta 4
+	 *Actualizar el parque
+	 */
+	public void actualizar(Parques p) throws SQLException {
+		
+		String query = "UPDATE PARQUES SET NOMBRE_PARQUE = ?, EXTENSION = ?, ID_CIUDAD = ? WHERE NOMBRE_PARQUE = ?";
+		this.conectar();
+		
+		PreparedStatement ps = conexion.prepareStatement(query);
+		ps.setString(1, p.getNombreParque());
+		ps.setString(2, p.getExtension());
+		ps.setInt(3, p.getIdCiudad());
+		ps.setString(4, p.getNombreParque());
+		
+		ps.executeUpdate();
+		
+		this.desconectar();
 	}
 
 }

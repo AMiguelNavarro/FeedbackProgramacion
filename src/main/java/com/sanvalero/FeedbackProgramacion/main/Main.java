@@ -1,12 +1,16 @@
 package com.sanvalero.FeedbackProgramacion.main;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.sanvalero.FeedbackProgramacion.dao.CiudadesDao;
 import com.sanvalero.FeedbackProgramacion.dao.ParquesDao;
-
+import com.sanvalero.FeedbackProgramacion.modelos.Ciudades;
+import com.sanvalero.FeedbackProgramacion.modelos.Parques;
+import com.sanvalero.FeedbackProgramacion.dao.CiudadesDao;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
 		Scanner sc = new Scanner(System.in);
 		int num;
@@ -42,9 +46,26 @@ public class Main {
 					break;
 					
 				case 3:	
+					System.out.println("Inserta el nombre de la ciudad, por favor:");
+					String nombreCiudad = sc.next();
 					
-					ParquesDao parque3 = new ParquesDao();
-					parque3.añadirParque(1);
+					CiudadesDao ciudad = new CiudadesDao();
+					
+					if (ciudad.getCiudad(nombreCiudad) == null) {
+						System.out.println("No existe esa ciudad");
+					} else {
+						System.out.println("Inserta el nombre del parque, por favor");
+						String nombreParque = sc.next();
+						
+						System.out.println("Inserta la extensión del parque, por favor");
+						String extensionParque = sc.next();
+						
+						Parques parque = new Parques();
+						parque.setExtension(extensionParque);
+						parque.setNombreParque(nombreParque);
+						ParquesDao parque3 = new ParquesDao();
+						parque3.añadir(parque);									
+					}
 					
 					break;
 				case 4:
