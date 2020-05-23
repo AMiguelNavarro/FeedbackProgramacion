@@ -6,17 +6,19 @@ public class Parques { // Bean
 	private String nombreParque;
 	private String extension;
 	private int idCiudad;
+	private String nombreCiudad;
 	
 	
 	
 	public Parques() {
 	}
 
-	public Parques(int idParque, String nombreParque, String extension, int idCiudad) {
+	public Parques(int idParque, String nombreParque, String extension, int idCiudad, String nombreCiudad) {
 		this.idParque = idParque;
 		this.nombreParque = nombreParque;
 		this.extension = extension;
 		this.idCiudad = idCiudad;
+		this.nombreCiudad = nombreCiudad;
 	}
 	
 	public int getIdParque() {
@@ -42,6 +44,12 @@ public class Parques { // Bean
 	}
 	public void setIdCiudad(int idCiudad) {
 		this.idCiudad = idCiudad;
+	}
+	public String getNombreCiudad() {
+		return nombreCiudad;
+	}
+	public void setNombreCiudad(String nombreCiudad) {
+		this.nombreCiudad = nombreCiudad;
 	}
 	
 	

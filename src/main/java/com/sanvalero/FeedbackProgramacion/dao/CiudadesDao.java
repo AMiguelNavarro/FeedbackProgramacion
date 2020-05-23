@@ -16,34 +16,27 @@ public class CiudadesDao extends BaseDAO implements IDAO <Ciudades, String>{
 	 *@param Pregunta 3
 	 *hacer un select con los datos de la ciudad que ha introducido el usuario, en el main se comprueba si existe por el return de este método
 	 */
-	public Ciudades getCiudad(String nombreCiudad) {
+	public boolean getCiudad(String nombreCiudad) throws SQLException {
 		
+		boolean resultado;
 		final String SELECT_POR_NCIUDAD = "SELECT * FROM PARQUES P INNER JOIN CIUDADES C ON P.ID_CIUDAD = C.ID_CIUDAD WHERE C.NOMBRE_CIUDAD = ?";
-		Ciudades ciudad = new Ciudades();
 		this.conectar();		
-		try {
+		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_NCIUDAD);
+		ps.setString(1, nombreCiudad);
+		ResultSet result = ps.executeQuery();
 			
-			PreparedStatement ps = conexion.prepareStatement(SELECT_POR_NCIUDAD);
-			ps.setString(1, nombreCiudad);
-			ResultSet result = ps.executeQuery();
-			
-			
-			
-			while (result.next()) {
-				ciudad.setNombreCiudad(nombreCiudad);
-
-			}
-			
-			ps.close();
-			result.close();
-			
-			
-		} catch (Exception e) {
-			System.out.println("No existe la ciudad, no se puede hacer");
-		}finally {
-			this.desconectar();
+		if (result.next()) {
+			resultado = true;
+		} else {
+			resultado = false;
 		}
-		return ciudad;
+		
+		ps.close();
+		result.close();
+		
+		this.desconectar();
+
+		return resultado;
 	}
 	
 	// Parte de las interfaces

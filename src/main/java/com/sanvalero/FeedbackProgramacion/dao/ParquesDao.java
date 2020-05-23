@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import com.sanvalero.FeedbackProgramacion.interfaces.IDAO;
 import com.sanvalero.FeedbackProgramacion.modelos.Parques;
 
 import oracle.net.aso.p;
 
+/**
+ * @author alber
+ *
+ */
 public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	
 	
@@ -77,6 +83,31 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	}
 	
 	
+	/**
+	 *@author alber
+	 *@param Pregunta 4
+	 *Imprimir por pantalla los datos del parque una vez haya comprobado que existen
+	 */
+	public void listarParquePorNombreParque(String nombreParque) throws SQLException {
+		this.conectar();
+		final String SELECT_POR_NPARQUE = "SELECT NOMBRE_PARQUE, NOMBRE_CIUDAD, EXTENSION FROM PARQUES P INNER JOIN CIUDADES C ON C.ID_CIUDAD = P.ID_CIUDAD WHERE NOMBRE_PARQUE = ?";
+		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_NPARQUE);
+		ps.setString(1, nombreParque);
+		ResultSet result = ps.executeQuery();
+		
+		while (result.next()) {
+			System.out.println("NOMBRE_PARQUE: "+result.getString(1));
+			System.out.println("NOMBRE_CIUDAD: "+result.getString(2));
+			System.out.println("EXTENSION: "+result.getString(3));
+		}
+		
+		ps.close();
+		result.close();
+		this.desconectar();
+		
+	}
+	
+	
 	
 	/**
 	 *@author alber
@@ -106,32 +137,72 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	
+	
+	/**
+	 *@author alber
+	 *@param Pregunta 5
+	 *Listar por cadena de texto
+	 */	
+	public void listarParquePorCadena(String cadena) throws SQLException{
+		
+		this.conectar();
+		
+		final String SELECT_POR_CADENA = "SELECT * FROM PARQUES WHERE NOMBRE_PARQUE LIKE '%"+cadena+"%'";
+		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_CADENA);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			System.out.println("ID_PARQUE: " + rs.getInt(1));
+			System.out.println("NOMBRE_PARQUE: " + rs.getString(2));
+			System.out.println("EXTENSION: " + rs.getString(3));
+			System.out.println("ID_CIUDAD: " + rs.getInt(4));
+		}
+		
+		ps.close();
+		rs.close();		
+		this.desconectar();
+		
+	}
+	
+	
 	
 	/**
 	 *@author alber
 	 *@param Pregunta 4
-	 *Listar los parque por el nombre de parque que haya puesto el usuario
-	 */
-	public List<Parques> findAll(Parques p) throws SQLException{
-	
-		String query = "SELECT * FROM PARQUES WHERE NOMBRE_PARQUE = ?";
+	 *Comprobar si el parque existe
+	 */	
+	public boolean getParque (String nombreParque) throws SQLException{
 		
-		PreparedStatement ps = conexion.prepareStatement(query);
-		ps.setString(1, p.getNombreParque());
+		boolean resultado;
+		final String SELECT_POR_NPARQUE = "SELECT * FROM PARQUES WHERE NOMBRE_PARQUE = ?";
 		
-		ResultSet rs = ps.executeQuery();
+		this.conectar();
 		
-		List<Parques> listaParques = new ArrayList();
+		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_NPARQUE);
+		ps.setString(1, nombreParque);
 		
-		while (rs.next()) {
-			Parques parque = new Parques();
-			parque.setNombreParque(rs.getString("NOMBRE_PARQUE"));
-			parque.setExtension(rs.getString("EXTENSION"));
-			parque.setIdCiudad(rs.getInt("ID_CIUDAD"));
+		ResultSet result = ps.executeQuery();
+		
+		if (result.next()) {
+			resultado = true;
+		} else {
+			resultado = false;
 		}
 		
-		return listaParques;
+		ps.close();
+		result.close();
+		this.desconectar();
+		
+		return resultado;
+		
+	}
+
+	public List<Parques> findAll(Parques p) throws SQLException{
+
+		
+		return findAll(p);
 	}
 
 	
@@ -142,7 +213,7 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	 */
 	public void actualizar(Parques p) throws SQLException {
 		
-		String query = "UPDATE PARQUES SET NOMBRE_PARQUE = ?, EXTENSION = ?, ID_CIUDAD = ? WHERE NOMBRE_PARQUE = ?";
+		String query = "UPDATE PARQUES SET NOMBRE_PARQUE = ?, EXTENSION = ?, NOMBRE_CIUDAD = ? WHERE NOMBRE_PARQUE = ?";
 		this.conectar();
 		
 		PreparedStatement ps = conexion.prepareStatement(query);
