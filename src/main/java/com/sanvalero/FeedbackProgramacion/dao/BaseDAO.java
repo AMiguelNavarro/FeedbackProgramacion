@@ -14,9 +14,17 @@ public class BaseDAO extends MotorOracle{ // Esta clase nos permitira hacer cone
 		Connection conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","HR");
 		*/
 	
+
 	protected Connection conexion = null;
 	String cadenaConexion = "jdbc:oracle:thin:@localhost:1521:XE";	
-
+	
+	
+	/**
+	 * Conecta con la base de datos
+	 *@author alber
+	 *
+	 */
+	@Override
 	public void conectar() {
 		try {
 			
@@ -46,7 +54,12 @@ public class BaseDAO extends MotorOracle{ // Esta clase nos permitira hacer cone
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	/**
+	 * Cierra la conexión de la base de datos 
+	 *@author alber
+	 *
+	 */
 	@Override
 	public void desconectar() {
 		try {

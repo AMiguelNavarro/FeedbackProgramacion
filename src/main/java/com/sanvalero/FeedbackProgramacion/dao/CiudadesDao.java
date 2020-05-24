@@ -12,9 +12,10 @@ import com.sanvalero.FeedbackProgramacion.modelos.Ciudades;
 public class CiudadesDao extends BaseDAO implements IDAO <Ciudades, String>{
 	
 	/**
+	 * PREGUNTA 3.- Comprueba si existe la ciudad que ha introducido el usuario
 	 *@author alber
-	 *@param Pregunta 3
-	 *hacer un select con los datos de la ciudad que ha introducido el usuario, en el main se comprueba si existe por el return de este método
+	 *@param nombre ciudad
+	 *
 	 */
 	public boolean getCiudad(String nombreCiudad) throws SQLException {
 		
@@ -38,6 +39,29 @@ public class CiudadesDao extends BaseDAO implements IDAO <Ciudades, String>{
 
 		return resultado;
 	}
+	
+	/**
+	 * PREGUNTA 8.- Lista el nombre de las ciudades con una suma de extensión mayor que la solicitada por el usuario
+	 *@author alber
+	 *@param extension
+	 *
+	 */
+	public void listarCiudadesPorExtension (int extension) throws SQLException {
+		
+		final String SELECT_POR_EXTENSION = "SELECT C.NOMBRE_CIUDAD, SUM(P.EXTENSION) FROM CIUDADES C INNER JOIN PARQUES P ON P.ID_CIUDAD = C.ID_CIUDAD GROUP BY NOMBRE_CIUDAD HAVING SUM (P.EXTENSION) > ?";
+		
+		this.conectar();
+		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_EXTENSION);
+		ps.setInt(1, extension);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			System.out.println("Nombre ciudad ----> " +rs.getString(1));
+			System.out.println("Suma total extension de sus parques ---->" + rs.getString(2));
+		}
+	}
+
+	
 	
 	// Parte de las interfaces
 
