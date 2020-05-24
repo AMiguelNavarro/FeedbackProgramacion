@@ -1,6 +1,6 @@
 package com.sanvalero.FeedbackProgramacion.dao;
 
-public class SQLException extends Exception {
+public class SQLException extends Exception { // Clase para la excepciones
 
 	public SQLException() {
 		

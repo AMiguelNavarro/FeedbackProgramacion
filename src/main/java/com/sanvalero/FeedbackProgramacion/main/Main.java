@@ -54,9 +54,9 @@ public class Main {
 					System.out.println("Inserta el nombre de la ciudad, por favor:");
 					String nombreCiudad = sc.next();
 					
-					CiudadesDao ciudad = new CiudadesDao();
+					ParquesDao parque3 = new ParquesDao();
 					
-					if (ciudad.getCiudad(nombreCiudad) == false) {
+					if (parque3.comprobarParquesPorNombreCiudad(nombreCiudad) == false) {
 						System.out.println("No existe esa ciudad");
 					} else {
 						System.out.println("Inserta el nombre del parque, por favor");
@@ -77,7 +77,6 @@ public class Main {
 						parque.setIdParque(idParque);
 						parque.setIdCiudad(idCiudad);
 						
-						ParquesDao parque3 = new ParquesDao();
 						parque3.añadir(parque);		
 						
 						System.out.println("Parque añadido con éxito");
@@ -91,7 +90,7 @@ public class Main {
 					String nombreParque = sc.next();
 					
 					ParquesDao parque4 = new ParquesDao();
-					if (parque4.getParque(nombreParque) == false) { // getParque() comprueba que el parque exista
+					if (parque4.comprobarParque(nombreParque) == false) { // getParque() comprueba que el parque exista
 						System.out.println("El parque no existe, no se puede actualizar nada");
 					} else {
 						parque4.listarParquePorNombreParque(nombreParque); // se muestran por consola los datos del parque seleccionado

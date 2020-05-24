@@ -12,35 +12,6 @@ import com.sanvalero.FeedbackProgramacion.modelos.Ciudades;
 public class CiudadesDao extends BaseDAO implements IDAO <Ciudades, String>{
 	
 	/**
-	 * PREGUNTA 3.- Comprueba si existe la ciudad que ha introducido el usuario
-	 *@author alber
-	 *@param nombre ciudad
-	 *
-	 */
-	public boolean getCiudad(String nombreCiudad) throws SQLException {
-		
-		boolean resultado;
-		final String SELECT_POR_NCIUDAD = "SELECT * FROM PARQUES P INNER JOIN CIUDADES C ON P.ID_CIUDAD = C.ID_CIUDAD WHERE C.NOMBRE_CIUDAD = ?";
-		this.conectar();		
-		PreparedStatement ps = conexion.prepareStatement(SELECT_POR_NCIUDAD);
-		ps.setString(1, nombreCiudad);
-		ResultSet result = ps.executeQuery();
-			
-		if (result.next()) {
-			resultado = true;
-		} else {
-			resultado = false;
-		}
-		
-		ps.close();
-		result.close();
-		
-		this.desconectar();
-
-		return resultado;
-	}
-	
-	/**
 	 * PREGUNTA 8.- Lista el nombre de las ciudades con una suma de extensión mayor que la solicitada por el usuario
 	 *@author alber
 	 *@param extension

@@ -20,6 +20,7 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	 *@param nombre de la ciudad
 	 *
 	 */
+
 	public void listarParquesPorNombreCiudad(String nomCiudad) throws SQLException { // Pregunta 1
 		
 		final String SELECT_POR_NCIUDAD = "SELECT NOMBRE_PARQUE FROM PARQUES P INNER JOIN CIUDADES C ON C.ID_CIUDAD = P.ID_CIUDAD WHERE NOMBRE_CIUDAD = ?";
@@ -97,7 +98,7 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	 *@param nombre parque
 	 *
 	 */	
-	public boolean getParque (String nombreParque) throws SQLException{
+	public boolean comprobarParque (String nombreParque) throws SQLException{
 		
 		boolean resultado;
 		final String SELECT_POR_NPARQUE = "SELECT * FROM PARQUES WHERE NOMBRE_PARQUE = ?";
@@ -236,7 +237,7 @@ public class ParquesDao extends BaseDAO implements IDAO<Parques, String>{
 	
 	
 	/**
-	 * PREGUNTA 7.- Comprueba que la ciudad exista
+	 * PREGUNTA 3 y 7.- Comprueba que la ciudad exista
 	 *@author alber
 	 *@param nombre ciudad
 	 *
